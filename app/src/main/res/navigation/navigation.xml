@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/pokedexListFragment">
+
+    <fragment
+        android:id="@+id/pokedexListFragment"
+        android:name="com.example.pokedex.fragment.PokedexListFragment"
+        android:label="fragment_pokedex_list"
+        tools:layout="@layout/fragment_pokedex_list" />
+</navigation>
