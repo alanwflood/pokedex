@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="pokemon"
             type="com.example.pokedex.model.PokedexEntry" />
@@ -15,23 +15,38 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:src="@drawable/ic_launcher_background"
-            android:id="@+id/imageView"
+            android:id="@+id/image_view"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:src="@drawable/ic_launcher_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:text="@{pokemon.name}"
+            android:id="@+id/id_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{`No: ` + pokemon.displayId}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/name_text"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintStart_toEndOf="@+id/image_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="No: 25" />
+
+        <TextView
+            android:id="@+id/name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{pokemon.name}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@+id/id_text"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Name of Pokemon" />
+            tools:text="Pikachu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

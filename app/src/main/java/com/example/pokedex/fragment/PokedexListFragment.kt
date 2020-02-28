@@ -6,12 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pokedex.R
@@ -65,9 +64,18 @@ class PokedexListFragment : Fragment() {
     }
 
     private class PokedexEntryHolder(val binding: ListItemPokedexListBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init {
+            binding.root.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View) {
+            binding.root.findNavController().navigate(R.id.action_pokedexListFragment_to_pokemonShowFragment)
+        }
 
         fun bind(entry: PokedexEntry) {
+
             Log.d(TAG, "name: ${entry.name}")
             Log.d(TAG, "id: ${entry.id}")
             Log.d(TAG, "sprite: ${entry.spriteUrl}")
@@ -75,9 +83,11 @@ class PokedexListFragment : Fragment() {
 
             binding.apply {
                 pokemon = entry
+
                 executePendingBindings()
             }
         }
+
     }
 
     private inner class PokedexEntryAdapter(private val pokedexEntries: PokedexEntries) :

@@ -3,7 +3,7 @@ package com.example.pokedex.model
 import com.google.gson.annotations.SerializedName
 
 data class PokedexEntry(
-    private val _name: String,
+    @SerializedName("name") private val _name: String,
     val url: String
 ) {
     val name: String
@@ -19,6 +19,9 @@ data class PokedexEntry(
     // Parse a URL using the ID
     val spriteUrl: String
         get() = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png"
+
+    val displayId: String
+        get() = id.padStart(3, '0')
 }
 
 data class PokedexEntries(

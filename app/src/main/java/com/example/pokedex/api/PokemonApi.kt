@@ -11,14 +11,14 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 class PokemonApi {
-    private val BASE_URL = HttpUrl
+    private val baseUrl = HttpUrl
         .Builder()
         .scheme("https")
         .host( "pokeapi.co")
         .addPathSegments("api/v2/")
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL.toString())
+        .baseUrl(baseUrl.toString())
         .addConverterFactory(
             GsonConverterFactory.create(
                 GsonBuilder().create()
