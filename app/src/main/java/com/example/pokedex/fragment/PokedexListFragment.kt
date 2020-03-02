@@ -11,6 +11,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.paging.PagedList
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -46,22 +49,24 @@ class PokedexListFragment : Fragment() {
             container,
             false
         )
-
-        binding.pokedexListRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        pokedexListViewModel.pokemonEntriesLiveData.observe(
+        val viewAdapter = PokedexEntryAdapter()
+        pokedexListViewModel.pokemon.observe(
             viewLifecycleOwner,
-            Observer { pokedexEntries ->
-                binding.pokedexListRecyclerView.adapter = PokedexEntryAdapter(pokedexEntries = pokedexEntries)
+            Observer { pokemonEntry ->
+                viewAdapter.submitList(pokemonEntry)
             }
         )
+
+        binding.pokedexListRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = viewAdapter
+        }
     }
 
     private class PokedexEntryHolder(val binding: ListItemPokedexListBinding) :
@@ -87,8 +92,22 @@ class PokedexListFragment : Fragment() {
 
     }
 
-    private inner class PokedexEntryAdapter(private val pokedexEntries: PokedexEntries) :
-        RecyclerView.Adapter<PokedexEntryHolder>() {
+    private inner class PokedexEntryAdapter :
+        PagedListAdapter<PokedexEntry, PokedexEntryHolder>(
+            object : DiffUtil.ItemCallback<PokedexEntry>() {
+                override fun areItemsTheSame(
+                    oldItem: PokedexEntry,
+                    newItem: PokedexEntry
+                ): Boolean =
+                    oldItem.id == newItem.id
+
+                override fun areContentsTheSame(
+                    oldItem: PokedexEntry,
+                    newItem: PokedexEntry
+                ): Boolean  =
+                    oldItem == newItem
+            }
+        ) {
         private lateinit var binding: ListItemPokedexListBinding
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokedexEntryHolder {
             binding = DataBindingUtil.inflate(
@@ -100,11 +119,9 @@ class PokedexListFragment : Fragment() {
             return PokedexEntryHolder(binding)
         }
 
-        override fun getItemCount(): Int = pokedexEntries.entries.size
-
         override fun onBindViewHolder(holder: PokedexEntryHolder, position: Int) {
-
-            holder.bind(pokedexEntries.entries[position])
+            val entry: PokedexEntry? = getItem(position)
+            holder.bind(entry!!)
         }
     }
 

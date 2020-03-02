@@ -3,16 +3,15 @@ package com.example.pokedex.api
 import com.example.pokedex.model.PokedexEntries
 import com.example.pokedex.model.Pokemon
 import com.google.gson.GsonBuilder
-import io.reactivex.schedulers.Schedulers
 import okhttp3.HttpUrl
+import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.Url
 
-class PokemonApi {
+object PokemonApi {
     private val baseUrl = HttpUrl
         .Builder()
         .scheme("https")
@@ -26,12 +25,11 @@ class PokemonApi {
                 GsonBuilder().create()
             )
         )
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
         .build()
 
     private var client: PokemonApiCalls = retrofit.create(PokemonApiCalls::class.java)
 
-    suspend fun getPokemonList(offset: Int = 0) = client.fetchPokemonList(offset = offset)
+    suspend fun getPokemonList(offset: Int = 0, limit: Int = 20) = client.fetchPokemonList(offset = offset, limit = limit)
     suspend fun getPokemon(url: String) = client.fetchPokemon(url)
 }
 
@@ -39,11 +37,11 @@ interface PokemonApiCalls {
     @GET("pokemon/")
     suspend fun fetchPokemonList(
         @Query("offset") offset: Int,
-        @Query("limit") limit: Int = 151
-    ): PokedexEntries
+        @Query("limit") limit: Int
+    ): Response<PokedexEntries>
 
     @GET
     suspend fun fetchPokemon(
         @Url url: String
-    ): Pokemon
+    ): Response<Pokemon>
 }
