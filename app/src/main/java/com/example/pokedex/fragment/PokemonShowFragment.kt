@@ -6,22 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.pokedex.R
 import com.example.pokedex.databinding.FragmentPokemonShowBinding
+import com.example.pokedex.viewModel.PokemonShowViewModel
+import com.example.pokedex.viewModel.PokemonShowViewModelFactory
 
 class PokemonShowFragment: Fragment() {
-    private lateinit var binding: FragmentPokemonShowBinding
+    private val args: PokemonShowFragmentArgs by navArgs()
+    private val pokemonShowViewModel: PokemonShowViewModel by viewModels {
+        PokemonShowViewModelFactory(args.pokedexEntry)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
+        val binding = DataBindingUtil.inflate<FragmentPokemonShowBinding>(
             inflater,
             R.layout.fragment_pokemon_show,
             container,
             false
-        )
+        ).apply {
+            viewModel = pokemonShowViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
         return binding.root
     }
 }

@@ -3,8 +3,10 @@ package com.example.pokedex.api
 import com.example.pokedex.model.PokedexEntries
 import com.example.pokedex.model.Pokemon
 import com.google.gson.GsonBuilder
+import io.reactivex.schedulers.Schedulers
 import okhttp3.HttpUrl
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,7 +16,7 @@ class PokemonApi {
     private val baseUrl = HttpUrl
         .Builder()
         .scheme("https")
-        .host( "pokeapi.co")
+        .host("pokeapi.co")
         .addPathSegments("api/v2/")
 
     private val retrofit = Retrofit.Builder()
@@ -23,7 +25,10 @@ class PokemonApi {
             GsonConverterFactory.create(
                 GsonBuilder().create()
             )
-        ).build()
+        )
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+        .build()
+
     private var client: PokemonApiCalls = retrofit.create(PokemonApiCalls::class.java)
 
     suspend fun getPokemonList(offset: Int = 0) = client.fetchPokemonList(offset = offset)

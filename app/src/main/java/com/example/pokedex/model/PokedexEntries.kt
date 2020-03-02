@@ -1,13 +1,18 @@
 package com.example.pokedex.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import java.util.*
 
+@Parcelize
 data class PokedexEntry(
     @SerializedName("name") private val _name: String,
     val url: String
-) {
+): Parcelable {
+    @ExperimentalStdlibApi
     val name: String
-        get() = _name.capitalize()
+        get() = _name.capitalize(Locale.getDefault())
 
     // This is fairly brittle, but saves having to send heaps of requests,
     // Rather than continually firing request for each pokemon,

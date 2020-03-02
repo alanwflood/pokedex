@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -22,6 +23,7 @@ import com.example.pokedex.viewModel.PokemonListViewModel
 
 
 private const val TAG = "Pokedex List Fragment"
+private const val NAV_ARGS = "pokedexEntry"
 
 /**
  * Use the [PokedexListFragment.newInstance] factory method to
@@ -57,7 +59,6 @@ class PokedexListFragment : Fragment() {
         pokedexListViewModel.pokemonEntriesLiveData.observe(
             viewLifecycleOwner,
             Observer { pokedexEntries ->
-                Log.d(TAG, "Have ${pokedexEntries.entries.size} pokemon in viewModel")
                 binding.pokedexListRecyclerView.adapter = PokedexEntryAdapter(pokedexEntries = pokedexEntries)
             }
         )
@@ -71,19 +72,15 @@ class PokedexListFragment : Fragment() {
         }
 
         override fun onClick(view: View) {
-            binding.root.findNavController().navigate(R.id.action_pokedexListFragment_to_pokemonShowFragment)
+            val bundle = bundleOf(Pair(NAV_ARGS, binding.pokemon))
+            Log.d(TAG, "bundle: $bundle")
+            binding.root.findNavController().navigate(R.id.action_pokedexListFragment_to_pokemonShowFragment, bundle)
         }
 
         fun bind(entry: PokedexEntry) {
-
-            Log.d(TAG, "name: ${entry.name}")
-            Log.d(TAG, "id: ${entry.id}")
-            Log.d(TAG, "sprite: ${entry.spriteUrl}")
             Glide.with(binding.root).load(entry.spriteUrl).placeholder(R.drawable.ic_pokeball).into(binding.imageView)
-
             binding.apply {
                 pokemon = entry
-
                 executePendingBindings()
             }
         }

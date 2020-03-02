@@ -17,5 +17,10 @@
     <fragment
         android:id="@+id/pokemonShowFragment"
         android:name="com.example.pokedex.fragment.PokemonShowFragment"
-        android:label="PokemonShowFragment" />
+        tools:layout="@layout/fragment_pokemon_show"
+        android:label="PokemonShowFragment" >
+        <argument
+            android:name="pokedexEntry"
+            app:argType="com.example.pokedex.model.PokedexEntry" />
+    </fragment>
 </navigation>
