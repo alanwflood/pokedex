@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/pokedexListFragment">
+    app:startDestination="@id/pokemonListFragment">
 
     <fragment
-        android:id="@+id/pokedexListFragment"
-        android:name="com.example.pokedex.fragment.PokedexListFragment"
-        android:label="fragment_pokedex_list"
-        tools:layout="@layout/fragment_pokedex_list" >
+        android:id="@+id/pokemonListFragment"
+        android:name="com.example.pokedex.fragment.PokemonListFragment"
+        android:label="fragment_pokemon_list"
+        tools:layout="@layout/fragment_pokemon_list" >
         <action
             android:id="@+id/action_pokedexListFragment_to_pokemonShowFragment"
             app:destination="@id/pokemonShowFragment" />

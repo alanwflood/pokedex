@@ -11,7 +11,7 @@ data class Pokemon(
 ) {
     @ExperimentalStdlibApi
     val name: String
-        get() = _name.capitalize(Locale.getDefault())
+        get() = _name.capitalize(Locale.ROOT)
 }
 
 data class PokemonSpriteUrls(

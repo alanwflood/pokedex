@@ -20,6 +20,7 @@
             android:id="@+id/image_view"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            app:imageFromUrl="@{pokemon.spriteUrl}"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

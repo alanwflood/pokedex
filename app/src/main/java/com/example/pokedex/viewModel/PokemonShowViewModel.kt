@@ -9,12 +9,11 @@ import kotlinx.coroutines.Dispatchers
 
 private const val TAG = "Pokemon Show View Model"
 
-class PokemonShowViewModel(val pokedexEntry: PokedexEntry): ViewModel() {
+class PokemonShowViewModel(val pokedexEntry: PokedexEntry) : ViewModel() {
     private val url = pokedexEntry.url
 
-    val pokemon = liveData(Dispatchers.IO)  {
+    val pokemon = liveData(Dispatchers.IO) {
         val retrievedPokemon = PokemonApi.getPokemon(url).body()!!
-        Log.d(TAG, "retrievedPokemon: $retrievedPokemon")
         emit(retrievedPokemon)
     }
 }

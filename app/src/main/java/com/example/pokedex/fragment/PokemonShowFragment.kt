@@ -13,7 +13,7 @@ import com.example.pokedex.databinding.FragmentPokemonShowBinding
 import com.example.pokedex.viewModel.PokemonShowViewModel
 import com.example.pokedex.viewModel.PokemonShowViewModelFactory
 
-class PokemonShowFragment: Fragment() {
+class PokemonShowFragment : Fragment() {
     private val args: PokemonShowFragmentArgs by navArgs()
     private val pokemonShowViewModel: PokemonShowViewModel by viewModels {
         PokemonShowViewModelFactory(args.pokedexEntry)

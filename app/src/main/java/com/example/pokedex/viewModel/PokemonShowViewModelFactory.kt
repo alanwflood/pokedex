@@ -10,7 +10,7 @@ import com.example.pokedex.model.PokedexEntry
  */
 class PokemonShowViewModelFactory(
     private val pokedexEntry: PokedexEntry
-): ViewModelProvider.NewInstanceFactory() {
+) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

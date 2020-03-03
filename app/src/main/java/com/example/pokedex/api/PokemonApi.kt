@@ -1,6 +1,6 @@
 package com.example.pokedex.api
 
-import com.example.pokedex.model.PokedexEntries
+import com.example.pokedex.model.PokemonEntries
 import com.example.pokedex.model.Pokemon
 import com.google.gson.GsonBuilder
 import okhttp3.HttpUrl
@@ -18,18 +18,22 @@ object PokemonApi {
         .host("pokeapi.co")
         .addPathSegments("api/v2/")
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(baseUrl.toString())
-        .addConverterFactory(
-            GsonConverterFactory.create(
-                GsonBuilder().create()
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(baseUrl.toString())
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().create()
+                )
             )
-        )
-        .build()
+            .build()
+    }
 
     private var client: PokemonApiCalls = retrofit.create(PokemonApiCalls::class.java)
 
-    suspend fun getPokemonList(offset: Int = 0, limit: Int = 20) = client.fetchPokemonList(offset = offset, limit = limit)
+    suspend fun getPokemonList(offset: Int = 0, limit: Int = 20) =
+        client.fetchPokemonList(offset = offset, limit = limit)
+
     suspend fun getPokemon(url: String) = client.fetchPokemon(url)
 }
 
@@ -38,7 +42,7 @@ interface PokemonApiCalls {
     suspend fun fetchPokemonList(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): Response<PokedexEntries>
+    ): Response<PokemonEntries>
 
     @GET
     suspend fun fetchPokemon(

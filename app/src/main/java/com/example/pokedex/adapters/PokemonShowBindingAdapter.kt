@@ -17,6 +17,7 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
         Glide.with(view.context)
             .load(imageUrl)
+            .error(R.drawable.ic_pokeball)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(view)
     }
@@ -47,11 +48,9 @@ fun getBackgroundResource(color: String?): Int =
     }
 
 @BindingAdapter("textColor")
-// Put this method in whichever class you deem appropriate
-// static or non-static, up to you.
 fun setTextColor(textView: TextView, backgroundColor: String?) {
     val color = textView.context.resources.getString(getBackgroundResource(backgroundColor))
-    val lum =  Color.parseColor(color).luminance
+    val lum = Color.parseColor(color).luminance
     val colorHex = if (lum < 0.7) {
         0xFFFFFFFF
     } else {
