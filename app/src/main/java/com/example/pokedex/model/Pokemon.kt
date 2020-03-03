@@ -26,9 +26,12 @@ data class PokemonSpriteUrls(
 
 
 data class PokemonSpecies(
-    @SerializedName("color") val color: String,
+    @SerializedName("color") val _color: NameResponse,
     @SerializedName("flavour_text_entries") val flavourTextEntries: List<FlavourTextEntry>
-)
+) {
+    val color: String
+        get() = _color.name
+}
 
 data class FlavourTextEntry(
     @SerializedName("flavor_text") val flavorText: String,

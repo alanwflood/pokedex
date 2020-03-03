@@ -1,6 +1,7 @@
 package com.example.pokedex.adapters
 
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,6 +25,7 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
 
 @BindingAdapter("backgroundColor")
 fun setBackground(view: View, color: String?) {
+    Log.d("Color", "$color")
     view.setBackgroundResource(getBackgroundResource(color))
 }
 
