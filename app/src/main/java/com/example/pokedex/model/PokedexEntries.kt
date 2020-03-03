@@ -1,15 +1,22 @@
 package com.example.pokedex.model
 
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import android.os.Parcelable
+import android.util.Log
+import androidx.paging.PageKeyedDataSource
+import com.example.pokedex.api.PokemonApi
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 @Parcelize
 data class PokedexEntry(
     @SerializedName("name") private val _name: String,
     val url: String
-): Parcelable {
+) : Parcelable {
     @ExperimentalStdlibApi
     val name: String
         get() = _name.capitalize(Locale.getDefault())
@@ -34,3 +41,70 @@ data class PokedexEntries(
     @SerializedName("previous") val previousUrl: String?,
     @SerializedName("results") val entries: List<PokedexEntry>
 )
+
+class PokemonEntries(private val scope: CoroutineScope) :
+    PageKeyedDataSource<String, PokedexEntry>() {
+    override fun loadInitial(
+        params: LoadInitialParams<String>,
+        callback: LoadInitialCallback<String, PokedexEntry>
+    ) {
+        scope.launch {
+            try {
+                val response = PokemonApi.getPokemonList()
+                when {
+                    response.isSuccessful -> {
+                        val data = response.body()
+                        callback.onResult(
+                            data?.entries ?: listOf(),
+                            data?.previousUrl,
+                            data?.nextUrl
+                        )
+                    }
+                }
+            } catch (exception: Exception) {
+                Log.e("Pokemon Entries", "Failed to fetch data!")
+            }
+        }
+    }
+
+    override fun loadAfter(
+        params: LoadParams<String>,
+        callback: LoadCallback<String, PokedexEntry>
+    ) {
+        Log.d("LoadAfter", "${params.key}")
+        scope.launch {
+            try {
+                val response = PokemonApi.getPokemonList(offset = params.key.toInt(), limit = params.requestedLoadSize)
+                when {
+                    response.isSuccessful -> {
+                        val data = response.body()
+                        callback.onResult(data?.entries ?: listOf(), data?.nextUrl)
+                    }
+                }
+            } catch (exception: Exception) {
+                Log.e("Pokemon Entries", "Failed to next fetch data!")
+            }
+        }
+    }
+
+    override fun loadBefore(
+        params: LoadParams<String>,
+        callback: LoadCallback<String, PokedexEntry>
+    ) {
+        Log.d("LoadBefore", "${params.key}")
+        scope.launch {
+            try {
+                val response = PokemonApi.getPokemonList(offset = params.key.toInt(), limit = params.requestedLoadSize)
+                when {
+                    response.isSuccessful -> {
+                        val data = response.body()
+                        callback.onResult(data?.entries ?: listOf(), data?.previousUrl)
+                    }
+                }
+            } catch (exception: Exception) {
+                Log.e("Pokemon Entries", "Failed to previous fetch data!")
+            }
+        }
+    }
+
+}
