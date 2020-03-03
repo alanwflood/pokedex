@@ -14,11 +14,6 @@ import com.example.pokedex.adapters.PokedexListEntryAdapter
 import com.example.pokedex.databinding.FragmentPokemonListBinding
 import com.example.pokedex.viewModel.PokemonListViewModel
 
-
-/**
- * Use the [PokedexListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PokemonListFragment : Fragment() {
     private lateinit var binding: FragmentPokemonListBinding
 
@@ -55,10 +50,5 @@ class PokemonListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = viewAdapter
         }
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = PokemonListFragment()
     }
 }

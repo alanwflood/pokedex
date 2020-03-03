@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.pokedex.model.PokemonEntry
 
 /**
- * Factory for creating a [PokemonShowViewModel] with a constructor that takes a [PokedexEntry]
+ * Factory for creating a [PokemonShowViewModel] with a constructor that takes a [PokemonEntry]
  */
 class PokemonShowViewModelFactory(
     private val pokedexEntry: PokemonEntry

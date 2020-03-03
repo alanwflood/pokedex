@@ -31,9 +31,8 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="24dp"
                 android:paddingTop="72dp"
-                android:paddingBottom="40dp"
-                >
-<!--            app:backgroundColor="@{viewModel.species.color.name}"-->
+                android:paddingBottom="40dp">
+                <!--            app:backgroundColor="@{viewModel.species.color.name}"-->
                 <TextView
                     android:id="@+id/name_text"
                     android:layout_width="match_parent"
@@ -45,16 +44,16 @@
                     android:textSize="24sp"
                     app:fontFamily="@font/pokemon_gb"
                     tools:text="Pikachu" />
-<!--                app:textColor="@{viewModel.species.color.name}"-->
+                <!--                app:textColor="@{viewModel.species.color.name}"-->
 
                 <!--                <TextView-->
-<!--                    android:id="@+id/description_text"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@{viewModel.species.description.text}"-->
-<!--                    app:fontFamily="@font/pokemon_gb"-->
-<!--                    app:textColor="@{viewModel.species.color.name}"-->
-<!--                    tools:text="This little blurb in here should describe everything about the pokemon" />-->
+                <!--                    android:id="@+id/description_text"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="@{viewModel.species.description.text}"-->
+                <!--                    app:fontFamily="@font/pokemon_gb"-->
+                <!--                    app:textColor="@{viewModel.species.color.name}"-->
+                <!--                    tools:text="This little blurb in here should describe everything about the pokemon" />-->
             </LinearLayout>
 
             <ImageView
@@ -62,6 +61,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
+                android:contentDescription="@{viewModel.pokemonEntry.name}"
                 android:scaleType="center"
                 app:imageFromUrl="@{viewModel.pokemonEntry.spriteUrl}" />
         </FrameLayout>

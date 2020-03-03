@@ -68,7 +68,7 @@ data class PokemonEntries(
 }
 
 /**
- * Setup [PokemonEntries] and [PokedexEntry] for pagination
+ * Setup [PokemonEntries] and [PokemonEntry] for pagination
  */
 class PagedPokemonEntries(private val scope: CoroutineScope) :
     PageKeyedDataSource<String, PokemonEntry>() {
