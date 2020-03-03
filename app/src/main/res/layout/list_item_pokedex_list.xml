@@ -7,21 +7,22 @@
 
         <variable
             name="pokemon"
-            type="com.example.pokedex.model.PokedexEntry" />
+            type="com.example.pokedex.model.PokemonEntry" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:paddingVertical="8dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/list_seperator"
-        android:layout_height="wrap_content">
+        android:paddingVertical="8dp">
 
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:imageFromUrl="@{pokemon.spriteUrl}"
+            android:contentDescription="@{pokemon.name}"
             android:src="@drawable/ic_launcher_background"
+            app:imageFromUrl="@{pokemon.spriteUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,9 +44,9 @@
         <TextView
             android:id="@+id/name_text"
             android:layout_width="0dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:gravity="start"
             android:text="@{pokemon.name}"
             android:textAlignment="textStart"

@@ -1,20 +1,17 @@
 package com.example.pokedex.viewModel
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import com.example.pokedex.api.PokemonApi
-import com.example.pokedex.model.PokedexEntry
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.*
+import com.example.pokedex.Repository
+import com.example.pokedex.model.Pokemon
+import com.example.pokedex.model.PokemonEntry
 
 private const val TAG = "Pokemon Show View Model"
 
-class PokemonShowViewModel(val pokedexEntry: PokedexEntry) : ViewModel() {
-    private val url = pokedexEntry.url
+class PokemonShowViewModel(val pokemonEntry: PokemonEntry) : ViewModel() {
+    val pokemon: LiveData<Pokemon> = Repository.getPokemon(pokemonEntry)
 
-    val pokemon = liveData(Dispatchers.IO) {
-        val retrievedPokemon = PokemonApi.getPokemon(url).body()!!
-        emit(retrievedPokemon)
+    fun cancelJob() {
+        Repository.cancelJobs()
     }
 }
 

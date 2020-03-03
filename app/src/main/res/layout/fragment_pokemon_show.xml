@@ -23,31 +23,31 @@
             android:orientation="vertical"
             android:paddingTop="10dp">
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginHorizontal="24dp"-->
-<!--                android:layout_marginTop="72dp"-->
-<!--                android:orientation="vertical"-->
-<!--                android:paddingHorizontal="24dp"-->
-<!--                android:paddingTop="72dp"-->
-<!--                android:paddingBottom="40dp"-->
-<!--                app:backgroundColor="@{viewModel.species.color.name}">-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="72dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="72dp"
+                android:paddingBottom="40dp"
+                >
+<!--            app:backgroundColor="@{viewModel.species.color.name}"-->
+                <TextView
+                    android:id="@+id/name_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.pokemonEntry.name}"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    app:fontFamily="@font/pokemon_gb"
+                    tools:text="Pikachu" />
+<!--                app:textColor="@{viewModel.species.color.name}"-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/name_text"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginBottom="16dp"-->
-<!--                    android:text="@{viewModel.pokedexEntry.name}"-->
-<!--                    android:textAlignment="center"-->
-<!--                    android:textSize="24sp"-->
-<!--                    app:fontFamily="@font/pokemon_gb"-->
-<!--                    app:textColor="@{viewModel.species.color.name}"-->
-<!--                    tools:text="Pikachu" />-->
-
-<!--                <TextView-->
+                <!--                <TextView-->
 <!--                    android:id="@+id/description_text"-->
 <!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="wrap_content"-->
@@ -55,7 +55,7 @@
 <!--                    app:fontFamily="@font/pokemon_gb"-->
 <!--                    app:textColor="@{viewModel.species.color.name}"-->
 <!--                    tools:text="This little blurb in here should describe everything about the pokemon" />-->
-<!--            </LinearLayout>-->
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/sprite_image"
@@ -63,7 +63,7 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="center"
-                app:imageFromUrl="@{viewModel.pokedexEntry.spriteUrl}" />
+                app:imageFromUrl="@{viewModel.pokemonEntry.spriteUrl}" />
         </FrameLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

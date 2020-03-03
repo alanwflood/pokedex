@@ -17,7 +17,7 @@ import java.util.*
 private const val POKEAPI_LIMIT = 807
 
 @Parcelize
-data class PokedexEntry(
+data class PokemonEntry(
     @SerializedName("name") private val _name: String,
     val url: String
 ) : Parcelable {
@@ -47,10 +47,10 @@ data class PokedexEntry(
 data class PokemonEntries(
     @SerializedName("next") val nextUrl: String?,
     @SerializedName("previous") val previousUrl: String?,
-    @SerializedName("results") val _entries: List<PokedexEntry>
+    @SerializedName("results") val _entries: List<PokemonEntry>
 ) {
     // Filter out the list to remove junk Pokemon data
-    val entries: List<PokedexEntry>
+    val entries: List<PokemonEntry>
         get() = _entries.filter {
             it.id.toInt() <= POKEAPI_LIMIT
         }
@@ -71,10 +71,10 @@ data class PokemonEntries(
  * Setup [PokemonEntries] and [PokedexEntry] for pagination
  */
 class PagedPokemonEntries(private val scope: CoroutineScope) :
-    PageKeyedDataSource<String, PokedexEntry>() {
+    PageKeyedDataSource<String, PokemonEntry>() {
     override fun loadInitial(
         params: LoadInitialParams<String>,
-        callback: LoadInitialCallback<String, PokedexEntry>
+        callback: LoadInitialCallback<String, PokemonEntry>
     ) {
         scope.launch {
             try {
@@ -97,7 +97,7 @@ class PagedPokemonEntries(private val scope: CoroutineScope) :
 
     override fun loadAfter(
         params: LoadParams<String>,
-        callback: LoadCallback<String, PokedexEntry>
+        callback: LoadCallback<String, PokemonEntry>
     ) {
         scope.launch {
             try {
@@ -119,7 +119,7 @@ class PagedPokemonEntries(private val scope: CoroutineScope) :
 
     override fun loadBefore(
         params: LoadParams<String>,
-        callback: LoadCallback<String, PokedexEntry>
+        callback: LoadCallback<String, PokemonEntry>
     ) {
         scope.launch {
             try {

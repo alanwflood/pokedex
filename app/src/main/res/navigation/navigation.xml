@@ -20,7 +20,7 @@
         tools:layout="@layout/fragment_pokemon_show"
         android:label="PokemonShowFragment" >
         <argument
-            android:name="pokedexEntry"
-            app:argType="com.example.pokedex.model.PokedexEntry" />
+            android:name="pokemonEntry"
+            app:argType="com.example.pokedex.model.PokemonEntry" />
     </fragment>
 </navigation>
