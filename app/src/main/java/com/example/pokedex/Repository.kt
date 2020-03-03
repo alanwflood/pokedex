@@ -14,6 +14,7 @@ import kotlinx.coroutines.withContext
 
 object Repository {
     var job: CompletableJob? = null
+
     fun getPokemon(pokemonEntry: PokemonEntry): LiveData<Pokemon> {
         return object : LiveData<Pokemon>() {
             override fun onActive() {
@@ -21,11 +22,12 @@ object Repository {
                 job?.let { fetchJob ->
                     CoroutineScope(IO + fetchJob).launch {
                         try {
-                            val response = PokemonApi.getPokemon(pokemonEntry.url)
+                            val pokemonResponse = PokemonApi.getPokemon(pokemonEntry.id)
+                            val speciesResponse = PokemonApi.getSpecies(pokemonEntry.id)
                             when {
-                                response.isSuccessful -> {
+                                pokemonResponse.isSuccessful && speciesResponse.isSuccessful -> {
                                     withContext(Main) {
-                                        value = response.body()
+                                        value = Pokemon(pokemonResponse.body(), speciesResponse.body())
                                     }
                                 }
                             }
@@ -45,3 +47,4 @@ object Repository {
         job?.cancel()
     }
 }
+
